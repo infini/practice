@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="static_check">
+      <UniqueIdentifier>{3b4c5e2c-8e1a-47e1-b9c5-5dcd87100e51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ado">
+      <UniqueIdentifier>{65af891a-be49-42ea-8f4d-f03c524f6fbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -24,13 +30,25 @@
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="static_check.hpp">
+      <Filter>static_check</Filter>
+    </ClInclude>
+    <ClInclude Include="ado_connection.h">
+      <Filter>ado</Filter>
+    </ClInclude>
+    <ClInclude Include="ado_base.h">
+      <Filter>ado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ado_wrapper.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ado_connection.cpp">
+      <Filter>ado</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
