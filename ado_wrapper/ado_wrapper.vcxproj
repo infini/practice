@@ -75,14 +75,27 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ado_append.h" />
     <ClInclude Include="ado_base.h" />
+    <ClInclude Include="ado_collection.h" />
+    <ClInclude Include="ado_command.h" />
     <ClInclude Include="ado_connection.h" />
+    <ClInclude Include="ado_open.h" />
+    <ClInclude Include="ado_recordset.h" />
+    <ClInclude Include="ado_transaction.h" />
+    <ClInclude Include="ado_wrapper.hpp" />
     <ClInclude Include="static_check.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ado_append.cpp" />
+    <ClCompile Include="ado_collection.cpp" />
+    <ClCompile Include="ado_command.cpp" />
     <ClCompile Include="ado_connection.cpp" />
+    <ClCompile Include="ado_open.cpp" />
+    <ClCompile Include="ado_recordset.cpp" />
+    <ClCompile Include="ado_transaction.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

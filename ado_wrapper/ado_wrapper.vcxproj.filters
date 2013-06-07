@@ -39,6 +39,27 @@
     <ClInclude Include="ado_base.h">
       <Filter>ado</Filter>
     </ClInclude>
+    <ClInclude Include="ado_transaction.h">
+      <Filter>ado</Filter>
+    </ClInclude>
+    <ClInclude Include="ado_append.h">
+      <Filter>ado</Filter>
+    </ClInclude>
+    <ClInclude Include="ado_open.h">
+      <Filter>ado</Filter>
+    </ClInclude>
+    <ClInclude Include="ado_wrapper.hpp">
+      <Filter>ado</Filter>
+    </ClInclude>
+    <ClInclude Include="ado_recordset.h">
+      <Filter>ado</Filter>
+    </ClInclude>
+    <ClInclude Include="ado_command.h">
+      <Filter>ado</Filter>
+    </ClInclude>
+    <ClInclude Include="ado_collection.h">
+      <Filter>ado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -48,6 +69,24 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ado_connection.cpp">
+      <Filter>ado</Filter>
+    </ClCompile>
+    <ClCompile Include="ado_transaction.cpp">
+      <Filter>ado</Filter>
+    </ClCompile>
+    <ClCompile Include="ado_append.cpp">
+      <Filter>ado</Filter>
+    </ClCompile>
+    <ClCompile Include="ado_open.cpp">
+      <Filter>ado</Filter>
+    </ClCompile>
+    <ClCompile Include="ado_recordset.cpp">
+      <Filter>ado</Filter>
+    </ClCompile>
+    <ClCompile Include="ado_command.cpp">
+      <Filter>ado</Filter>
+    </ClCompile>
+    <ClCompile Include="ado_collection.cpp">
       <Filter>ado</Filter>
     </ClCompile>
   </ItemGroup>

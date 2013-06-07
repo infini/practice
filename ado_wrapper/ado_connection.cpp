@@ -11,127 +11,47 @@ ADOConnection::~ADOConnection()
 {
 }
 
-void	ADOConnection::OpenX()
+void	ADOConnection::cancel()
 {
-	// Define ADO object pointers.  Initialize pointers on define.
-	// These are in the ADODB:: namespace
-	_RecordsetPtr pRstEmployee = NULL;
-	_ConnectionPtr pConnection = NULL;
+	m_connection->Cancel();
+}
 
-	// Define string variables.
-	_bstr_t strCnn("Provider='sqloledb'; Data Source='My_Data_Source'; Initial Catalog='pubs'; Integrated Security='SSPI';");
+void	ADOConnection::open( const char* connection_string, const char* user_id, const char* password )
+{
+	m_connection->Open( _bstr_t( connection_string ), _bstr_t( user_id ), _bstr_t( password ), adAsyncConnect );
 
-	IADORecordBinding *picRs = NULL;   // Interface Pointer declared.
-	CEmployeeRs emprs;   // C++ Class object
-	DBDATE varDate;
+//	Open(BSTR ConnectionString, BSTR UserID, BSTR Password, long Options);
+}
 
-	try {
-		// open connection and record set
-		TESTHR(pConnection.CreateInstance(__uuidof(Connection)));
-		pConnection->Open(strCnn, "", "", adConnectUnspecified);
-
-		TESTHR(pRstEmployee.CreateInstance(__uuidof(Recordset)));
-		pRstEmployee->Open("Employee", _variant_t((IDispatch *)pConnection,true), 
-			adOpenKeyset, adLockOptimistic, adCmdTable);
-
-		// Open an IADORecordBinding interface pointer for Binding Recordset to a class.
-		TESTHR(pRstEmployee->QueryInterface(__uuidof(IADORecordBinding),(LPVOID*)&picRs));
-
-		// Bind the Recordset to a C++ Class here.
-		TESTHR(picRs->BindToRecordset(&emprs));
-
-		// Assign first employee record's hire date to variable, then change hire date.
-		varDate = emprs.m_sze_hiredate;
-		printf("Original data\n");
-		printf("\tName - Hire Date\n");
-		printf("  %s  %s - %d/%d/%d\n\n",
-			emprs.le_fnameStatus == adFldOK ? 
-			emprs.m_sze_fname : "<NULL>",
-			emprs.le_lnameStatus == adFldOK ? 
-			emprs.m_sze_lname : "<NULL>",
-			emprs.le_hiredateStatus == adFldOK ? 
-			emprs.m_sze_hiredate.month : 0,
-			emprs.le_hiredateStatus == adFldOK ? 
-			emprs.m_sze_hiredate.day : 0,
-			emprs.le_hiredateStatus == adFldOK ? 
-			emprs.m_sze_hiredate.year : 0); 
-
-		emprs.m_sze_hiredate.year = 1900;
-		emprs.m_sze_hiredate.month = 1;
-		emprs.m_sze_hiredate.day = 1;
-		picRs->Update(&emprs);
-
-		printf("\nChanged data\n");
-		printf("\tName - Hire Date\n");
-		printf("  %s %s - %d/%d/%d\n\n",
-			emprs.le_fnameStatus == adFldOK ? 
-			emprs.m_sze_fname : "<NULL>",
-			emprs.le_lnameStatus == adFldOK ? 
-			emprs.m_sze_lname : "<NULL>",
-			emprs.le_hiredateStatus == adFldOK ? 
-			emprs.m_sze_hiredate.month : 0,
-			emprs.le_hiredateStatus == adFldOK ? 
-			emprs.m_sze_hiredate.day : 0,
-			emprs.le_hiredateStatus == adFldOK ? 
-			emprs.m_sze_hiredate.year : 0); 
-
-		// Requery Recordset and reset the hire date.
-		pRstEmployee->Requery(adOptionUnspecified);
-
-		// Open IADORecordBinding interface pointer for Binding Recordset to a class.
-		TESTHR(pRstEmployee->QueryInterface(__uuidof(IADORecordBinding), (LPVOID*)&picRs));
-
-		// Rebind the Recordset to a C++ Class here.
-		TESTHR(picRs->BindToRecordset(&emprs));
-		emprs.m_sze_hiredate = varDate;
-		picRs->Update(&emprs);
-		printf("\nData after reset\n");
-		printf("\tName - Hire Date\n");
-		printf("  %s %s - %d/%d/%d", emprs.le_fnameStatus == adFldOK ? 
-			emprs.m_sze_fname : "<NULL>",
-			emprs.le_lnameStatus == adFldOK ? 
-			emprs.m_sze_lname : "<NULL>",
-			emprs.le_hiredateStatus == adFldOK ? 
-			emprs.m_sze_hiredate.month : 0,
-			emprs.le_hiredateStatus == adFldOK ? 
-			emprs.m_sze_hiredate.day : 0,
-			emprs.le_hiredateStatus == adFldOK ? 
-			emprs.m_sze_hiredate.year : 0); 
-	}
-	catch(_com_error &e) {
-		// Display errors, if any. Pass a connection pointer accessed from the Connection.
-		PrintProviderError(pConnection);
-		PrintComError(e);
+void	ADOConnection::close()
+{
+	// close and set nothing
+	if( m_connection->State == adStateOpen ) {
+		m_connection->Close();
 	}
 }
 
-void PrintProviderError(_ConnectionPtr pConnection)
+void	ADOConnection::execute()
 {
-	// Print Provider Errors from Connection object.
-	// pErr is a record object in the Connection's Error collection.
-	ErrorPtr pErr = NULL;
-
-	if ( (pConnection->Errors->Count) > 0) {
-		long nCount = pConnection->Errors->Count;
-		// Collection ranges from 0 to nCount -1.
-		for ( long i = 0 ; i < nCount ; i++ ) {
-			pErr = pConnection->Errors->GetItem(i);
-			printf("\t Error number: %x\t%s", pErr->Number, pErr->Description);
-		}
-	}
+//	Execute(BSTR CommandText, VARIANT *RecordsAffected, long Options, _ADORecordset **ppiRset);
 }
 
-void PrintComError(_com_error &e)
+void	ADOConnection::beginTrans()
 {
-	_bstr_t bstrSource(e.Source());
-	_bstr_t bstrDescription(e.Description());
-
-	// Print COM errors. 
-	printf("Error\n");
-	printf("\tCode = %08lx\n", e.Error());
-	printf("\tCode meaning = %s\n", e.ErrorMessage());
-	printf("\tSource = %s\n", (LPCSTR) bstrSource);
-	printf("\tDescription = %s\n", (LPCSTR) bstrDescription);
+//	BeginTrans(long *TransactionLevel);
 }
 
+void	ADOConnection::commitTrans()
+{
+//	CommitTrans(void);
+}
 
+void	ADOConnection::rollbackTrans()
+{
+//	RollbackTrans(void);
+}
+
+void	ADOConnection::openSchema()
+{
+//	OpenSchema(SchemaEnum Schema, VARIANT Restrictions, VARIANT SchemaID, _ADORecordset **pprset);
+}
