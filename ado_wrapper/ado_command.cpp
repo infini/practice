@@ -6,15 +6,15 @@
 void	ADOCommand::cancel()
 {
 //	m_command->Cancel(void);
-}
-
-void	ADOCommand::createParameter()
-{
-//	m_command->CreateParameter(BSTR Name, DataTypeEnum Type, ParameterDirectionEnum Direction, long Size, VARIANT Value, _ADOParameter **ppiprm);
+//	HRESULT Cancel( );
 }
 
 void	ADOCommand::execute()
 {
-//	m_command->Execute(VARIANT *RecordsAffected, VARIANT *Parameters, long Options, _ADORecordset **ppirs);
+//	_RecordsetPtr Execute( VARIANT * RecordsAffected, VARIANT * Parameters, long Options );
 }
-	
+
+void	ADOCommand::create_parameter()
+{
+//	_ParameterPtr CreateParameter( _bstr_t Name, enum DataTypeEnum Type, enum ParameterDirectionEnum Direction, long Size, const _variant_t & Value = vtMissing );
+}

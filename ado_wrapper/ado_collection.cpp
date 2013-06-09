@@ -5,17 +5,15 @@
 
 void	ADOCollection::append()
 {
-//	Append(IDispatch *Object);
+//	HRESULT Append( IDispatch * Object );
 }
 
-void	ADOCollection::deletes()
+void	ADOCollection::_delete()
 {
-//	Delete(VARIANT Index);
+//	HRESULT Delete( const _variant_t & Index );
 }
 
 void	ADOCollection::refresh()
 {
-//	Refresh(void);
+//	HRESULT Refresh( );
 }
-
-

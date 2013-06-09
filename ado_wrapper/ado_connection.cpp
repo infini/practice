@@ -13,45 +13,50 @@ ADOConnection::~ADOConnection()
 
 void	ADOConnection::cancel()
 {
-	m_connection->Cancel();
-}
-
-void	ADOConnection::open( const char* connection_string, const char* user_id, const char* password )
-{
-	m_connection->Open( _bstr_t( connection_string ), _bstr_t( user_id ), _bstr_t( password ), adAsyncConnect );
-
-//	Open(BSTR ConnectionString, BSTR UserID, BSTR Password, long Options);
+//	HRESULT Cancel( );
 }
 
 void	ADOConnection::close()
 {
-	// close and set nothing
-	if( m_connection->State == adStateOpen ) {
-		m_connection->Close();
-	}
+	assert( m_connection->State == adStateOpen );
+
+ 	// close and set nothing
+ 	if( m_connection->State == adStateOpen ) {
+ 		m_connection->Close();
+ 	}
+
+//	HRESULT Close( );
 }
 
 void	ADOConnection::execute()
 {
-//	Execute(BSTR CommandText, VARIANT *RecordsAffected, long Options, _ADORecordset **ppiRset);
+//	_RecordsetPtr Execute( _bstr_t CommandText, VARIANT * RecordsAffected, long Options );
 }
 
-void	ADOConnection::beginTrans()
+void	ADOConnection::begin_trans()
 {
-//	BeginTrans(long *TransactionLevel);
+//	long BeginTrans( );
 }
 
-void	ADOConnection::commitTrans()
+void	ADOConnection::commit_trans()
 {
-//	CommitTrans(void);
+//	HRESULT CommitTrans( );
 }
 
-void	ADOConnection::rollbackTrans()
+void	ADOConnection::rollback_trans()
 {
-//	RollbackTrans(void);
+//	HRESULT RollbackTrans( );
 }
 
-void	ADOConnection::openSchema()
+void	ADOConnection::open()
 {
-//	OpenSchema(SchemaEnum Schema, VARIANT Restrictions, VARIANT SchemaID, _ADORecordset **pprset);
+// 	m_connection->Open( _bstr_t( connection_string ), _bstr_t( user_id ), _bstr_t( password ), adAsyncConnect );
+// 	m_connection->CursorLocation		= adUseClient;
+
+//	HRESULT Open( _bstr_t ConnectionString, _bstr_t UserID, _bstr_t Password, long Options );
+}
+
+void	ADOConnection::open_schema()
+{
+//	_RecordsetPtr OpenSchema( enum SchemaEnum Schema, const _variant_t & Restrictions = vtMissing, const _variant_t & SchemaID = vtMissing );
 }

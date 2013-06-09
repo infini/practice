@@ -36,18 +36,6 @@
     <ClInclude Include="ado_connection.h">
       <Filter>ado</Filter>
     </ClInclude>
-    <ClInclude Include="ado_base.h">
-      <Filter>ado</Filter>
-    </ClInclude>
-    <ClInclude Include="ado_transaction.h">
-      <Filter>ado</Filter>
-    </ClInclude>
-    <ClInclude Include="ado_append.h">
-      <Filter>ado</Filter>
-    </ClInclude>
-    <ClInclude Include="ado_open.h">
-      <Filter>ado</Filter>
-    </ClInclude>
     <ClInclude Include="ado_wrapper.hpp">
       <Filter>ado</Filter>
     </ClInclude>
@@ -69,15 +57,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ado_connection.cpp">
-      <Filter>ado</Filter>
-    </ClCompile>
-    <ClCompile Include="ado_transaction.cpp">
-      <Filter>ado</Filter>
-    </ClCompile>
-    <ClCompile Include="ado_append.cpp">
-      <Filter>ado</Filter>
-    </ClCompile>
-    <ClCompile Include="ado_open.cpp">
       <Filter>ado</Filter>
     </ClCompile>
     <ClCompile Include="ado_recordset.cpp">
