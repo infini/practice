@@ -6,6 +6,10 @@
 
 #include "ado_wrapper.hpp"
 
+#include "ado_command.h"
+#include "ado_connection.h"
+#include "ado_recordset.h"
+
 
 typedef		int		PersonalType;
 
@@ -16,35 +20,48 @@ int _tmain( void )
 		return -1;
 	}
 
-	_ConnectionPtr connection;
-	if( FAILED( connection.CreateInstance( __uuidof( Connection ) ) ) ) {
-		return -1;
-	}
-	connection->Open( "test", "user", "password", adAsyncConnect );
+	try {
+		PersonalType value( 0 );
 
-	_CommandPtr command;
-	if( FAILED( command.CreateInstance( __uuidof( Command ) ) ) ) {
-		return -1;
-	}
-	command->CommandText = "test";
-	command->CommandType = adCmdStoredProc;
+		ADOConnection adoConnection;
+		adoConnection.create_instance();
+		adoConnection.open( "connection_string", "user", "pw", adAsyncConnect );
+
+		assert( adoConnection.m_connection->GetState() == adStateConnecting );
+
+		std::cout << "connection state : " << adoConnection.m_connection->GetState() << std::endl;
+
+		ADOCommand adoCommand;
+		adoCommand.create_instance();
+		adoCommand.put_active_connection( _variant_t( ( IDispatch* )adoConnection.m_connection, true ) );
+
+		adoCommand.m_command->CommandType = adCmdStoredProc;
+		adoCommand.m_command->CommandText = _bstr_t( "test" );
+
+		//	ado::createParameter( adoCommand.m_command, "testInput", adParamInput, value );
 
 
-	PersonalType value( 0 );
+		_ParameterPtr parameter = adoCommand.create_parameter( "testInput", adInteger, adParamInput, sizeof( value ), value );
 
-	_ParameterPtr parameter = ado::createParameter( command, "testInput", adParamInput, value );
-	command->Parameters->Append( parameter );
+		adoCommand.cp( "testInput", adInteger, adParamInput, sizeof( value ), value );
 
-	command->ActiveConnection = connection;
+		adoCommand.append( parameter );
 
-	if( parameter ) {
-		std::cout << "success" << std::endl;
-	} else {
-		std::cout << "failed" << std::endl;
-	}
 
-	ado::createParameter( command, "testOutput", adParamOutput, value );
-
+		if( parameter ) {
+			std::cout << "success" << std::endl;
+		} else {
+			std::cout << "failed" << std::endl;
+		}
+ 	}
+ 	catch( _com_error& _error ) {
+		char s[120] = { 0, };
+		sprintf_s( s, sizeof( s ), "%08lx", reinterpret_cast<char*>( _error.Error() ) );
+ 		std::cout << "error code : " << s << std::endl;
+ 		std::cout << "error meaning : " << reinterpret_cast<LPCSTR>( _error.ErrorMessage() ) << std::endl;
+ 		std::cout << "error source : " << _error.Source() << std::endl;
+ 		std::cout << "error description : " << _error.Description() << std::endl;
+ 	}
 
 	::CoUninitialize();
 

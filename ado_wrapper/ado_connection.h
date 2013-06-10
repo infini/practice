@@ -12,15 +12,17 @@ public:
 
 	void	cancel();
 	void	close();
-	void	execute();
-	void	begin_trans();
+	_RecordsetPtr	execute( _bstr_t command_text, VARIANT * records_affected, long options = adCmdText );
+	long	begin_trans();
 	void	commit_trans();
 	void	rollback_trans();
-	void	open();
-	void	open_schema();
+	void	open( _bstr_t connection_string, _bstr_t user_id, _bstr_t password, long options = adConnectUnspecified/*adAsyncConnect*/ );
+	_RecordsetPtr	open_schema( enum SchemaEnum schema, const _variant_t& restrictions = vtMissing, const _variant_t& schema_id = vtMissing );
+
+	void	create_instance();
 
 
-private:
+//private:
 	_ConnectionPtr	m_connection;
 };
 

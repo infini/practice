@@ -15,13 +15,13 @@ namespace ado {
 	};
 
 	template<>
-	_ParameterPtr	createParameter( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const int & value )
+	_ParameterPtr	createParameter<int>( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const int & value )
 	{
 		return command->CreateParameter( _bstr_t( name ), adInteger, direction, sizeof( value ), value );
 	};
 
 	template<>
-	_ParameterPtr	createParameter( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const __int64 & value )
+	_ParameterPtr	createParameter<__int64>( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const __int64 & value )
 	{
 		return command->CreateParameter( _bstr_t( name ), adBigInt, direction, sizeof( value ), value );
 	};

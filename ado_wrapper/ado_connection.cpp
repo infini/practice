@@ -13,50 +13,62 @@ ADOConnection::~ADOConnection()
 
 void	ADOConnection::cancel()
 {
-//	HRESULT Cancel( );
+	if( FAILED( m_connection->Cancel() ) ) {
+		assert( 0 );
+	}
 }
 
 void	ADOConnection::close()
 {
-	assert( m_connection->State == adStateOpen );
+	assert( m_connection->GetState() == adStateOpen );
 
  	// close and set nothing
- 	if( m_connection->State == adStateOpen ) {
+ 	if( m_connection->GetState() == adStateOpen ) {
  		m_connection->Close();
  	}
-
-//	HRESULT Close( );
 }
 
-void	ADOConnection::execute()
+_RecordsetPtr	ADOConnection::execute( _bstr_t command_text, VARIANT * records_affected, long options )
 {
-//	_RecordsetPtr Execute( _bstr_t CommandText, VARIANT * RecordsAffected, long Options );
+	return m_connection->Execute( command_text, records_affected, options );
 }
 
-void	ADOConnection::begin_trans()
+long	ADOConnection::begin_trans()
 {
-//	long BeginTrans( );
+	return m_connection->BeginTrans();
 }
 
 void	ADOConnection::commit_trans()
 {
-//	HRESULT CommitTrans( );
+	if( FAILED( m_connection->CommitTrans() ) ) {
+		assert( 0 );
+	}
 }
 
 void	ADOConnection::rollback_trans()
 {
-//	HRESULT RollbackTrans( );
+	if( FAILED( m_connection->RollbackTrans() ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADOConnection::open()
+void	ADOConnection::open( _bstr_t connection_string, _bstr_t user_id, _bstr_t password, long options )
 {
-// 	m_connection->Open( _bstr_t( connection_string ), _bstr_t( user_id ), _bstr_t( password ), adAsyncConnect );
-// 	m_connection->CursorLocation		= adUseClient;
+	if( FAILED( m_connection->Open( connection_string, user_id, password, options ) ) ) {
+		assert( 0 );
+	}
 
-//	HRESULT Open( _bstr_t ConnectionString, _bstr_t UserID, _bstr_t Password, long Options );
+	m_connection->PutCursorLocation( adUseClient );
 }
 
-void	ADOConnection::open_schema()
+_RecordsetPtr	ADOConnection::open_schema( enum SchemaEnum schema, const _variant_t& restrictions, const _variant_t& schema_id )
 {
-//	_RecordsetPtr OpenSchema( enum SchemaEnum Schema, const _variant_t & Restrictions = vtMissing, const _variant_t & SchemaID = vtMissing );
+	return m_connection->OpenSchema( schema, restrictions, schema_id );
+}
+
+void	ADOConnection::create_instance()
+{
+	if( FAILED( m_connection.CreateInstance( __uuidof( Connection ) ) ) ) {
+		assert( 0 );
+	}
 }

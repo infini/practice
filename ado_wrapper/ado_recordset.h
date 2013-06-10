@@ -10,34 +10,37 @@ public:
 	ADORecordset();
 	~ADORecordset();
 
-	void	add_new();
+	void	add_new( const _variant_t& field_list = vtMissing, const _variant_t& values = vtMissing );
 	void	cancel();
-	void	cancel_batch();
+	void	cancel_batch( enum AffectEnum affect_records );
 	void	cancel_update();
-	void	clone();
+	_RecordsetPtr	clone( enum LockTypeEnum lock_type );
 	void	close();
-	void	compare_bookmarks();
-	void	_delete();
-	void	find();
-	void	get_rows();
-	void	get_string();
-	void	move();
+	enum CompareEnum	compare_bookmarks( const _variant_t& bookmark1, const _variant_t& bookmark2 );
+	void	_delete( enum AffectEnum affect_records );
+	void	find( _bstr_t criteria, long skip_records, enum SearchDirectionEnum search_direction, const _variant_t& start = vtMissing );
+	_variant_t	get_rows( long rows, const _variant_t& start = vtMissing, const _variant_t& fields = vtMissing );
+	_bstr_t	get_string( enum StringFormatEnum string_format, long num_rows, _bstr_t column_delimeter, _bstr_t row_delimeter, _bstr_t null_expr );
+	void	move( long num_records, const _variant_t& start = vtMissing );
 	void	move_first();
 	void	move_last();
 	void	move_next();
 	void	move_previous();
-	void	next_recordset();
-	void	open();
-	void	requery();
-	void	update();
-	void	update_batch();
-	void	resync();
-	void	save();
-	void	seek();
-	void	supports();
+	_RecordsetPtr	next_recordset( VARIANT* records_affected );
+	void	open( const _variant_t& source, const _variant_t& active_connection, enum CursorTypeEnum cursor_type = adOpenForwardOnly, enum LockTypeEnum lock_type = adLockReadOnly, long options = adCmdTable );
+	void	requery( long options );
+	void	update( const _variant_t& fields = vtMissing, const _variant_t& values = vtMissing );
+	void	update_batch( enum AffectEnum affect_records );
+	void	resync( enum AffectEnum affect_records, enum ResyncEnum resync_values );
+	void	save( const _variant_t& destination, enum PersistFormatEnum persist_format );
+	void	seek( const _variant_t& key_values, enum SeekEnum seek_option );
+	VARIANT_BOOL	supports( enum CursorOptionEnum cursor_options );
+
+	void	create_instance();
+	_variant_t	get_item( const _variant_t& index );
 
 
-private:
+//private:
 	_RecordsetPtr	m_recordset;
 };
 

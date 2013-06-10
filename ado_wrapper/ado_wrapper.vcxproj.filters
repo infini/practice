@@ -45,9 +45,6 @@
     <ClInclude Include="ado_command.h">
       <Filter>ado</Filter>
     </ClInclude>
-    <ClInclude Include="ado_collection.h">
-      <Filter>ado</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -63,9 +60,6 @@
       <Filter>ado</Filter>
     </ClCompile>
     <ClCompile Include="ado_command.cpp">
-      <Filter>ado</Filter>
-    </ClCompile>
-    <ClCompile Include="ado_collection.cpp">
       <Filter>ado</Filter>
     </ClCompile>
   </ItemGroup>

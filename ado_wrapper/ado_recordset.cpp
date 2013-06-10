@@ -11,143 +11,181 @@ ADORecordset::~ADORecordset()
 {
 }
 
-void	ADORecordset::add_new()
+void	ADORecordset::add_new( const _variant_t& field_list, const _variant_t& values )
 {
-//	HRESULT AddNew( const _variant_t & FieldList = vtMissing, const _variant_t & Values = vtMissing );
+	if( FAILED( m_recordset->AddNew( field_list, values ) ) ) {
+		assert( 0 );
+	}
 }
 
 void	ADORecordset::cancel()
 {
-//	HRESULT Cancel( );
+	if( FAILED( m_recordset->Cancel() ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADORecordset::cancel_batch()
+void	ADORecordset::cancel_batch( enum AffectEnum affect_records )
 {
-//	HRESULT CancelBatch( enum AffectEnum AffectRecords );
+	if( FAILED( m_recordset->CancelBatch( affect_records ) ) ) {
+		assert( 0 );
+	}
 }
 
 void	ADORecordset::cancel_update()
 {
-//	HRESULT CancelUpdate( );
+	if( FAILED( m_recordset->CancelUpdate() ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADORecordset::clone()
+_RecordsetPtr	ADORecordset::clone( enum LockTypeEnum lock_type )
 {
-//	_RecordsetPtr Clone( enum LockTypeEnum LockType );
+	return m_recordset->Clone( lock_type );
 }
 
 void	ADORecordset::close()
 {
-//	HRESULT Close( );
+	if( FAILED( m_recordset->Close() ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADORecordset::compare_bookmarks()
+enum CompareEnum	ADORecordset::compare_bookmarks( const _variant_t& bookmark1, const _variant_t& bookmark2 )
 {
-//	enum CompareEnum CompareBookmarks( const _variant_t & Bookmark1, const _variant_t & Bookmark2 );
+	return m_recordset->CompareBookmarks( bookmark1, bookmark2 );
 }
 
-void	ADORecordset::_delete()
+void	ADORecordset::_delete( enum AffectEnum affect_records )
 {
-//	HRESULT Delete( enum AffectEnum AffectRecords );
+	if( FAILED( m_recordset->Delete( affect_records ) ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADORecordset::find()
+void	ADORecordset::find( _bstr_t criteria, long skip_records, enum SearchDirectionEnum search_direction, const _variant_t& start )
 {
-//	HRESULT Find( _bstr_t Criteria, long SkipRecords, enum SearchDirectionEnum SearchDirection, const _variant_t & Start =	vtMissing );
+	if( FAILED( m_recordset->Find( criteria, skip_records, search_direction, start ) ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADORecordset::get_rows()
+_variant_t	ADORecordset::get_rows( long rows, const _variant_t& start, const _variant_t& fields )
 {
-//	_variant_t GetRows( long Rows, const _variant_t & Start = vtMissing, const _variant_t & Fields = vtMissing );
+	return m_recordset->GetRows( rows, start, fields );
 }
 
-void	ADORecordset::get_string()
+_bstr_t	ADORecordset::get_string( enum StringFormatEnum string_format, long num_rows, _bstr_t column_delimeter, _bstr_t row_delimeter, _bstr_t null_expr )
 {
-//	_bstr_t GetString( enum StringFormatEnum StringFormat, long NumRows, _bstr_t ColumnDelimeter, _bstr_t RowDelimeter, _bstr_t NullExpr );
+	return m_recordset->GetString( string_format, num_rows, column_delimeter, row_delimeter, null_expr );
 }
 
-void	ADORecordset::move()
+void	ADORecordset::move( long num_records, const _variant_t& start )
 {
-//	HRESULT Move( long NumRecords, const _variant_t & Start = vtMissing );
+	if( FAILED( m_recordset->Move( num_records, start ) ) ) {
+		assert( 0 );
+	}
 }
 
 void	ADORecordset::move_first()
 {
-//	HRESULT MoveFirst( );
+	if( FAILED( m_recordset->MoveFirst() ) ) {
+		assert( 0 );
+	}
 }
 
 void	ADORecordset::move_last()
 {
-//	HRESULT MoveLast( );
+	if( FAILED( m_recordset->MoveLast() ) ) {
+		assert( 0 );
+	}
 }
 
 void	ADORecordset::move_next()
 {
-//	HRESULT MoveNext( );
+	if( FAILED( m_recordset->MoveNext() ) ) {
+		assert( 0 );
+	}
 }
 
 void	ADORecordset::move_previous()
 {
-// 	CursorTypeEnum *plCursorType( NULL );
-// 
-// 	if( FAILED( m_recordset->get_CursorType( plCursorType ) ) ) {
-// 		return false;
-// 	}
-// 
-// 	if( *plCursorType == adOpenForwardOnly ) {
-// 		return false;
-// 	}
-// 
-// 	m_recordset->MovePrevious();
-// 
-// 	return true;
+	assert( m_recordset->GetCursorType() != adOpenForwardOnly );
 
-//	HRESULT MovePrevious( );
+	if( FAILED( m_recordset->MovePrevious() ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADORecordset::next_recordset()
+_RecordsetPtr	ADORecordset::next_recordset( VARIANT* records_affected )
 {
-//	_RecordsetPtr NextRecordset( VARIANT * RecordsAffected );
+	return m_recordset->NextRecordset( records_affected );
 }
 
-void	ADORecordset::open()
+void	ADORecordset::open( const _variant_t& source, const _variant_t& active_connection, enum CursorTypeEnum cursor_type, enum LockTypeEnum lock_type, long options )
 {
 //	m_recordset->Open( source, _variant_t( ( IDispatch* )connection, true ), adOpenForwardOnly, adLockReadOnly, adCmdTable );
 
-//	HRESULT Open( const _variant_t & Source, const _variant_t &	ActiveConnection, enum CursorTypeEnum CursorType, enum LockTypeEnum	LockType, long Options );
+	if( FAILED( m_recordset->Open( source, active_connection, cursor_type, lock_type, options ) ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADORecordset::requery()
+void	ADORecordset::requery( long options )
 {
-//	HRESULT Requery( long Options );
+	if( FAILED( m_recordset->Requery( options ) ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADORecordset::update()
+void	ADORecordset::update( const _variant_t& fields, const _variant_t& values )
 {
-//	HRESULT Update( const _variant_t & Fields = vtMissing, const _variant_t & Values = vtMissing );
+	if( FAILED( m_recordset->Update( fields, values ) ) ) {
+		assert( 0 );
+	}
 }
 
-void	ADORecordset::update_batch()
+void	ADORecordset::update_batch( enum AffectEnum affect_records )
 {
-//	HRESULT UpdateBatch( enum AffectEnum AffectRecords );
+	if( FAILED( m_recordset->UpdateBatch( affect_records ) ) ) {
+		assert( 0 );
+	};
 }
 
-void	ADORecordset::resync()
+void	ADORecordset::resync( enum AffectEnum affect_records, enum ResyncEnum resync_values )
 {
-//	HRESULT Resync( enum AffectEnum AffectRecords, enum ResyncEnum ResyncValues );
+	if( FAILED( m_recordset->Resync( affect_records, resync_values ) ) ) {
+		assert( 0 );
+	};
 }
 
-void	ADORecordset::save()
+void	ADORecordset::save( const _variant_t& destination, enum PersistFormatEnum persist_format )
 {
-//	HRESULT Save( const _variant_t & Destination, enum PersistFormatEnum PersistFormat );
+	if( FAILED( m_recordset->Save( destination, persist_format ) ) ) {
+		assert( 0 );
+	};
 }
 
-void	ADORecordset::seek()
+void	ADORecordset::seek( const _variant_t& key_values, enum SeekEnum seek_option )
 {
-//	HRESULT Seek( const _variant_t & KeyValues, enum SeekEnum SeekOption );
+	if( FAILED( m_recordset->Seek( key_values, seek_option ) ) ) {
+		assert ( 0 );
+	};
 }
 
-void	ADORecordset::supports()
+VARIANT_BOOL	ADORecordset::supports( enum CursorOptionEnum cursor_options )
 {
-//	VARIANT_BOOL Supports( enum CursorOptionEnum CursorOptions );
+	return m_recordset->Supports( cursor_options );
+}
+
+void	ADORecordset::create_instance()
+{
+	if( FAILED( m_recordset.CreateInstance( __uuidof( Recordset ) ) ) ) {
+		assert( 0 );
+	}
+}
+
+_variant_t	ADORecordset::get_item( const _variant_t& index )
+{
+	return m_recordset->GetFields()->GetItem( index )->GetValue();
 }
