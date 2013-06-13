@@ -45,6 +45,9 @@
     <ClInclude Include="ado_command.h">
       <Filter>ado</Filter>
     </ClInclude>
+    <ClInclude Include="exception.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -61,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="ado_command.cpp">
       <Filter>ado</Filter>
+    </ClCompile>
+    <ClCompile Include="exception.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

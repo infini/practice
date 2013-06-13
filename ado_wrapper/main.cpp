@@ -10,8 +10,18 @@
 #include "ado_connection.h"
 #include "ado_recordset.h"
 
+#include "exception.h"
+
+
+static const char* connection_string = "Provider=sqloledb;Persist Security Info=False;Network Library=dbmssocn;Initial Catalog=Telecaster_Puer;Data Source=10.255.10.12,1433";
+static const char* account = "rappelz_game";
+static const char* password = "elqldkagh";
 
 typedef		int		PersonalType;
+
+struct __decimal : DECIMAL
+{
+};
 
 
 int _tmain( void )
@@ -21,46 +31,48 @@ int _tmain( void )
 	}
 
 	try {
+
 		PersonalType value( 0 );
 
 		ADOConnection adoConnection;
 		adoConnection.create_instance();
-		adoConnection.open( "connection_string", "user", "pw", adAsyncConnect );
+		adoConnection.open( connection_string, account, password );
 
-		assert( adoConnection.m_connection->GetState() == adStateConnecting );
-
-		std::cout << "connection state : " << adoConnection.m_connection->GetState() << std::endl;
+		std::cout << "connection state : " << adoConnection.get_state() << std::endl;
 
 		ADOCommand adoCommand;
-		adoCommand.create_instance();
-		adoCommand.put_active_connection( _variant_t( ( IDispatch* )adoConnection.m_connection, true ) );
-
-		adoCommand.m_command->CommandType = adCmdStoredProc;
-		adoCommand.m_command->CommandText = _bstr_t( "test" );
-
-		//	ado::createParameter( adoCommand.m_command, "testInput", adParamInput, value );
+		adoConnection.initialize_command( adoCommand );
+		adoCommand.set_command( adCmdStoredProc, "test" );
 
 
-		_ParameterPtr parameter = adoCommand.create_parameter( "testInput", adInteger, adParamInput, sizeof( value ), value );
+//		adoCommand.cp( "test", adVarChar, adParamInput, sizeof( _account ), _account );
 
-		adoCommand.cp( "testInput", adInteger, adParamInput, sizeof( value ), value );
+		_ParameterPtr p = adoCommand.create_parameter( "tt", adInteger, adParamInput, sizeof( value ), value );
 
-		adoCommand.append( parameter );
+ 		_ParameterPtr p1 = adoCommand.cp( "testInput", adInteger, adParamInput, sizeof( value ), value );
 
+		DECIMAL decimal;
+		_ParameterPtr p2 = adoCommand.cp( "testInput", adDecimal, adParamInput, sizeof( decimal ), decimal, 1, 1 );
+		//STATIC_CHECK( p2, _DECIMAL );
+		
+		adoCommand.append( p1 );
 
-		if( parameter ) {
-			std::cout << "success" << std::endl;
-		} else {
-			std::cout << "failed" << std::endl;
-		}
+ 
+ 		if( p1 ) {
+ 			std::cout << "success" << std::endl;
+ 		} else {
+ 			std::cout << "failed" << std::endl;
+ 		}
  	}
- 	catch( _com_error& _error ) {
-		char s[120] = { 0, };
-		sprintf_s( s, sizeof( s ), "%08lx", reinterpret_cast<char*>( _error.Error() ) );
- 		std::cout << "error code : " << s << std::endl;
- 		std::cout << "error meaning : " << reinterpret_cast<LPCSTR>( _error.ErrorMessage() ) << std::endl;
- 		std::cout << "error source : " << _error.Source() << std::endl;
- 		std::cout << "error description : " << _error.Description() << std::endl;
+ 	catch( exceptions::commaon_error e ) {
+		std::cout << e.what() << std::endl;
+
+// 		char s[120] = { 0, };
+// 		sprintf_s( s, sizeof( s ), "%08lx", reinterpret_cast<char*>( _error.Error() ) );
+//  		std::cout << "error code : " << s << std::endl;
+//  		std::cout << "error meaning : " << reinterpret_cast<LPCSTR>( _error.ErrorMessage() ) << std::endl;
+//  		std::cout << "error source : " << _error.Source() << std::endl;
+//  		std::cout << "error description : " << _error.Description() << std::endl;
  	}
 
 	::CoUninitialize();

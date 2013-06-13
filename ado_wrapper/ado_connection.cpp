@@ -1,6 +1,7 @@
 
 #include "stdafx.h"
 #include "ado_connection.h"
+#include "ado_command.h"
 
 
 ADOConnection::ADOConnection()
@@ -28,9 +29,9 @@ void	ADOConnection::close()
  	}
 }
 
-_RecordsetPtr	ADOConnection::execute( _bstr_t command_text, VARIANT * records_affected, long options )
+_RecordsetPtr	ADOConnection::execute( const char* command_text, VARIANT* records_affected, long options )
 {
-	return m_connection->Execute( command_text, records_affected, options );
+	return m_connection->Execute( (_bstr_t)command_text, records_affected, options );
 }
 
 long	ADOConnection::begin_trans()
@@ -52,9 +53,9 @@ void	ADOConnection::rollback_trans()
 	}
 }
 
-void	ADOConnection::open( _bstr_t connection_string, _bstr_t user_id, _bstr_t password, long options )
+void	ADOConnection::open( const char* connection_string, const char* user_id, const char* password, const bool async_connect )
 {
-	if( FAILED( m_connection->Open( connection_string, user_id, password, options ) ) ) {
+	if( FAILED( m_connection->Open( (_bstr_t)connection_string, (_bstr_t)user_id, (_bstr_t)password, ( async_connect ? adAsyncConnect : adConnectUnspecified ) ) ) ) {
 		assert( 0 );
 	}
 
@@ -71,4 +72,18 @@ void	ADOConnection::create_instance()
 	if( FAILED( m_connection.CreateInstance( __uuidof( Connection ) ) ) ) {
 		assert( 0 );
 	}
+}
+
+long	ADOConnection::get_state() const
+{
+	return m_connection->GetState();
+}
+
+void	ADOConnection::initialize_command( ADOCommand& command )
+{
+	assert( get_state() == adStateOpen );
+
+	command.create_instance();
+
+	command.set_active_connection( m_connection );
 }

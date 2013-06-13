@@ -12,6 +12,6 @@ template<> struct CompileTimeChecker<false> {};
 
 #define STATIC_CHECK( expr, msg )\
 {\
-class ERROR_##msg {}; \
-	( void )sizeof( ( CompileTimeChecker< ( expr ) >( ERROR_##msg() ) ) );\
+class __error__##msg {}; \
+	( void )sizeof( ( CompileTimeChecker< ( expr ) >( __error__##msg() ) ) );\
 }
