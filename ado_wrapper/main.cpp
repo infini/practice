@@ -17,7 +17,7 @@ static const char* connection_string = "Provider=sqloledb;Persist Security Info=
 static const char* account = "rappelz_game";
 static const char* password = "elqldkagh";
 
-typedef		int		PersonalType;
+typedef		double		PersonalType;
 
 struct __decimal : DECIMAL
 {
@@ -31,7 +31,7 @@ int _tmain( void )
 	}
 
 	try {
-
+		
 		PersonalType value( 0 );
 
 		ADOConnection adoConnection;
@@ -43,7 +43,6 @@ int _tmain( void )
 		ADOCommand adoCommand;
 		adoConnection.initialize_command( adoCommand );
 		adoCommand.set_command( adCmdStoredProc, "test" );
-
 
 //		adoCommand.cp( "test", adVarChar, adParamInput, sizeof( _account ), _account );
 

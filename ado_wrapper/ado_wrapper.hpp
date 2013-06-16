@@ -5,25 +5,41 @@
 
 #import "C:\Program Files\Common Files\System\ado\msado60_Backcompat.tlb" no_namespace rename( "EOF", "adoEOF" )
 
+template< typename T >
+struct CreateParameterImpl;
 
 namespace ado {
-	template< typename _Type >
-	_ParameterPtr	createParameter( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const _Type & value )
+	template< typename T >
+	_ParameterPtr	createParameter( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const T & value )
 	{
-		STATIC_CHECK( 0, default );
-		return NULL;
+		return CreateParameterImpl< T >::createParameter( command, name, direction, value );
 	};
+};
 
-	template<>
-	_ParameterPtr	createParameter<int>( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const int & value )
+template< typename T >
+struct CreateParameterImpl
+{
+	static _ParameterPtr	createParameter( _CommandPtr /*command*/, const char* /*name*/, const ParameterDirectionEnum /*direction*/, const T& /*value*/ )
+	{
+		STATIC_CHECK( 0, do_specialization );
+		return NULL;
+	}
+};
+
+template<>
+struct CreateParameterImpl< int >
+{
+	static _ParameterPtr	createParameter( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const int& value )
 	{
 		return command->CreateParameter( _bstr_t( name ), adInteger, direction, sizeof( value ), value );
-	};
+	}
+};
 
-	template<>
-	_ParameterPtr	createParameter<__int64>( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const __int64 & value )
+template<>
+struct CreateParameterImpl< double >
+{
+	static _ParameterPtr	createParameter( _CommandPtr command, const char* name, const ParameterDirectionEnum direction, const double& value )
 	{
-		return command->CreateParameter( _bstr_t( name ), adBigInt, direction, sizeof( value ), value );
-	};
-
+		return command->CreateParameter( _bstr_t( name ), adDouble, direction, sizeof( value ), value );
+	}
 };
