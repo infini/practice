@@ -8,7 +8,7 @@
 #include "test_func.hpp"
 
 
-typedef std::vector<int>	ContainerInt;
+typedef std::vector< int >	ContainerInt;
 
 
 auto func = [] ( int val ) { std::cout << val << '\n'; };
@@ -24,17 +24,17 @@ struct Shorter
 
 int _tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
 {
-	// 	ContainerInt vec1;
-	// 	ContainerInt vec2;
-	// 
-	// 	testSize( vec1, 10 );
-	// 	testSize( vec2, 20 );
-	// 
-	// 	testSwap( vec1, vec2 );
-	// 
-	// 	char n = 1;
-	// 
-	// 	outputIterator( vec1, n );
+// 	ContainerInt vec1;
+// 	ContainerInt vec2;
+// 
+// 	testSize( vec1, 10 );
+// 	testSize( vec2, 20 );
+// 
+// 	testSwap( vec1, vec2 );
+// 
+// 	char n = 1;
+// 
+// 	outputIterator( vec1, n );
 
 	std::vector< std::string > vec;
 	vec.push_back( "저그" );
@@ -42,9 +42,11 @@ int _tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
 	vec.push_back( "스타크래프트" );
 	vec.push_back( "가디언" );
 
-	//	vec += "저그", "프로토스", "테란", "가디언";
+	//vec += "저그", "프로토스", "테란", "가디언";
 
 	std::sort( vec.begin(), vec.end(), Shorter() );
+
+	outputIterator( vec );
 
 	return 0;
 }

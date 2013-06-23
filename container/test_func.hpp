@@ -4,9 +4,10 @@
 
 #include <iostream>
 #include <iterator>
+#include <assert.h>
 
 
-template < class _Container >
+template< class _Container >
 void	outputCapacity( const _Container & container )
 {
 	std::cout << container.capacity() << '\n';
@@ -29,7 +30,14 @@ void	testSwap( _Container & container_src, _Container & container_dest )
 }
 
 template< class _Container, class _Type >
-void	outputIterator( _Container & container, _Type /*type*/ )
+void	outputIterator( const _Container & container, _Type /*type*/ )
 {
+	assert( !container.empty() );
 	std::copy( container.begin(), container.end(), std::ostream_iterator< _Type >( std::cout, "\n" ) );
+}
+
+template< class _Container >
+void	outputIterator( const _Container& container )
+{
+	outputIterator( container, *container.begin() );
 }
