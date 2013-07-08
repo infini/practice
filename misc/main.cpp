@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 
+#include "exception.h"
+
 
 class _A
 {
@@ -296,24 +298,32 @@ void modify( const int & ref )
 	nn = 2;
 }
 
-void _tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
+int	_tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
 {
-	Ref* p = new Ref;
 
-	p->m_ref = 10;
+	ExceptionDerived derived;
+	derived.func();
 
-	modify( p->m_ref + 20 );
+// 	Ref* p = new Ref;
+// 
+// 	p->m_ref = 10;
+// 
+// 	modify( p->m_ref + 20 );
+// 
+// 	p->Ref::~Ref();
+// 
+// 	int* leak = new int[10];
+// 
+// 	std::string abcde = "abcd" + 'e';
+// 
+// 	const int n = 100;
+// 	char overflow[100];
+// 
+// 	overflow[n] = 0;
+// 
+// 	delete [] leak;
 
-	p->Ref::~Ref();
 
-	int* leak = new int[10];
-
-	std::string abcde = "abcd" + 'e';
-
-	const int n = 100;
-	char overflow[100];
-
-	overflow[n] = 0;
 // 	_tt* original = new _tt( 1, 2 );
 // 
 // 	_ttt* p = new _ttt( original );
@@ -409,5 +419,5 @@ void _tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
 // 
 // 	A<std::vector<int> >::iter i;
 
-	exit( 0 );
+	return 0;
 }
