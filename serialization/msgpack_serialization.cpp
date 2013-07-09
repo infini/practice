@@ -32,20 +32,17 @@ void	MsgPackSerialization::func()
 
 	StopWatch sw;
 
-	int n = 10;
+	for( int nth = 0; nth < 1000; ++nth ) {
+		// Serialize it.
+		msgpack::sbuffer buffer;  // simple buffer
+		msgpack::pack( &buffer, container );
 
-	for( int nth = 0; nth < 1; ++nth ) {
-	// Serialize it.
-	msgpack::sbuffer buffer;  // simple buffer
-	msgpack::pack(&buffer, n/*container*/);
+		std::cout << "packed buffer size : " << buffer.size() << ", sizeof : " << sizeof( buffer ) << std::endl;
 
-	std::cout << "packed buffer size : " << buffer.size() << ", sizeof : " << sizeof( buffer ) << std::endl;
-
-	// Deserialize the serialized data.
-	msgpack::unpacked msg;    // includes memory pool and deserialized object
-	msgpack::unpack(&msg, buffer.data(), buffer.size());
-	msgpack::object obj = msg.get();
-
+		// Deserialize the serialized data.
+		msgpack::unpacked msg;    // includes memory pool and deserialized object
+		msgpack::unpack( &msg, buffer.data(), buffer.size() );
+		msgpack::object obj = msg.get();
 	}
 
 	std::cout << "msgpack : " << sw.now() << std::endl;

@@ -56,7 +56,6 @@ void	UserSerialization::func()
 
 void UserSerialization::Read( void* lpBuf, int nSize )
 {
-	return;
 	assert( 0 <= nSize );
 	if( nSize == 0 )
 		return;
