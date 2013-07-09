@@ -4,6 +4,7 @@
 #include <msgpack.hpp>
 #include <vector>
 #include <iostream>
+#include "stop_watch.h"
 
 #ifdef _DEBUG
 #pragma comment( lib, "msgpackd.lib" )
@@ -23,15 +24,20 @@ MsgPackSerialization::~MsgPackSerialization()
 void	MsgPackSerialization::func()
 {
 	std::vector<int> container;
-	for( int nth = 0; nth < 10; ++nth ) {
+	for( int nth = 0; nth < 1000; ++nth ) {
 		container.push_back( nth );
 	}
 
 	std::cout << "container size : " << container.size() << std::endl;
 
+	StopWatch sw;
+
+	int n = 10;
+
+	for( int nth = 0; nth < 1; ++nth ) {
 	// Serialize it.
 	msgpack::sbuffer buffer;  // simple buffer
-	msgpack::pack(&buffer, container);
+	msgpack::pack(&buffer, n/*container*/);
 
 	std::cout << "packed buffer size : " << buffer.size() << ", sizeof : " << sizeof( buffer ) << std::endl;
 
@@ -40,17 +46,19 @@ void	MsgPackSerialization::func()
 	msgpack::unpack(&msg, buffer.data(), buffer.size());
 	msgpack::object obj = msg.get();
 
-	std::cout << "unpacked obj sizeof : " << sizeof( obj ) << ", unpacked msg sizeof : " << sizeof( msg ) << std::endl;
+	}
+
+	std::cout << "msgpack : " << sw.now() << std::endl;
+
+//	std::cout << "unpacked obj sizeof : " << sizeof( obj ) << ", unpacked msg sizeof : " << sizeof( msg ) << std::endl;
 
 	// Print the deserialized object to stdout.
 	//std::cout << "msg obj : " << obj << std::endl;    // ["Hello," "World!"]
 
 	// Convert the deserialized object to staticaly typed object.
-	std::vector<int> result;
-	obj.convert(&result);
+//	std::vector<int> result;
+//	obj.convert(&result);
 
 	// If the type is mismatched, it throws msgpack::type_error.
-	std::vector<int> temp = obj.as< std::vector<int> >();
-
-	std::cout << temp.size() << std::endl;
+//	std::vector<int> temp = obj.as< std::vector<int> >();
 }
