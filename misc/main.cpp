@@ -298,11 +298,36 @@ void modify( const int & ref )
 	nn = 2;
 }
 
+#include <boost/any.hpp>
+
+void	calcDEF( const int helmet, const int suit, const int glove, const int boots, const float rate )
+{
+	const float sumDEF = rate * ( helmet + suit + glove + boots );
+	std::cout << "sum factor : " << sumDEF << std::endl;
+
+	const float eachDEF = ( rate * helmet ) + ( rate * suit ) + ( rate * glove ) + ( rate * boots );
+	std::cout << "each factor : " << eachDEF << std::endl;
+}
+
+
 int	_tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
 {
+	int a, b, c, d;
+	float f;
 
-	ExceptionDerived derived;
-	derived.func();
+	cin >> a >> b >> c >> d >> f;
+
+	calcDEF( a, b, c, d, f );
+// 	boost::any var_any = 0;
+// 	var_any = 3.14;
+// 	var_any = std::string( "test" );
+// 
+// 	auto var_auto = 0;
+// 	var_auto = 3.14;
+// 	//var_auto = std::string( "test" );
+// 
+// 	ExceptionDerived derived;
+// 	derived.func();
 
 // 	Ref* p = new Ref;
 // 
