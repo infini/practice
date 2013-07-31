@@ -299,25 +299,15 @@ void modify( const int & ref )
 }
 
 #include <boost/any.hpp>
-
-void	calcDEF( const int helmet, const int suit, const int glove, const int boots, const float rate )
-{
-	const float sumDEF = rate * ( helmet + suit + glove + boots );
-	std::cout << "sum factor : " << sumDEF << std::endl;
-
-	const float eachDEF = ( rate * helmet ) + ( rate * suit ) + ( rate * glove ) + ( rate * boots );
-	std::cout << "each factor : " << eachDEF << std::endl;
-}
+#include <Windows.h>
 
 
 int	_tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
 {
-	int a, b, c, d;
-	float f;
+	const size_t sizePage = ::GetLargePageMinimum() / ( 1024 /** 1024*/ );
 
-	cin >> a >> b >> c >> d >> f;
+	std::cout << "GetLargePageMinimum : " << sizePage << "kb" << std::endl;
 
-	calcDEF( a, b, c, d, f );
 // 	boost::any var_any = 0;
 // 	var_any = 3.14;
 // 	var_any = std::string( "test" );
