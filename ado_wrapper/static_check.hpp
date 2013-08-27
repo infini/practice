@@ -2,6 +2,12 @@
 #pragma once
 
 
+#define LINE1(x) #x
+#define LINE(x) LINE1(x)
+#define TODO(msg) message ( __FILE__ "(" LINE(__LINE__) "): [TODO] " #msg )
+
+
+
 template< bool >
 struct CompileTimeChecker	{	CompileTimeChecker(...);	};
 
