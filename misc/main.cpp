@@ -301,12 +301,19 @@ void modify( const int & ref )
 #include <boost/any.hpp>
 #include <Windows.h>
 
+#include <boost/functional/hash/hash.hpp>
 
 int	_tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
 {
 	const size_t sizePage = ::GetLargePageMinimum() / ( 1024 /** 1024*/ );
 
 	std::cout << "GetLargePageMinimum : " << sizePage << "kb" << std::endl;
+
+
+	boost::hash<std::string> string_hash;
+
+	std::size_t size = string_hash("aaaaaa");
+
 
 // 	boost::any var_any = 0;
 // 	var_any = 3.14;
