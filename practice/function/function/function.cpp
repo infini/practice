@@ -22,32 +22,35 @@ private:
 int _tmain(int argc, _TCHAR* argv[])
 {
 	RandomNumberGenerator kRandomNumberGenerator;
-	kRandomNumberGenerator.install();
+	//kRandomNumberGenerator.install();
 
-	std::vector<Base*>	kBase;
-	for( int i( 0 ); i < 10; ++i ) {
-		kBase.push_back( new Base );
+	typedef std::vector<Base*>	VectorBase;
+	VectorBase kVectorBase;
+	for( int i( 0 ); i < 10000; ++i ) {
+		kVectorBase.push_back( new Base );
 	}
 
-	Base kBasee;
-	int* p = kBasee.get();
+	const __int64 d1( ::GetTickCount() );
 
-	std::for_each( kBase.begin(), kBase.end(), []( std::vector<Base*>::value_type p ) {		delete p;	p = nullptr;	} );
-	SequenceDeleter<std::vector<Base*> > kSequenceDeleter;
-	kSequenceDeleter( kBase );
+	//SequenceDeleter<std::vector<Base*> >()( kVectorBase );
+	std::for_each( kVectorBase.begin(), kVectorBase.end(), []( VectorBase::value_type p ) {		delete p;	p = nullptr;	} );
+
+	const __int64 d2( ::GetTickCount() );
+	
 	
 
 	typedef boost::unordered_map<int, Base*>	MapBase;
 	MapBase kMapBase;
-
-	for( int i( 0 ); i < 10; ++i ) {
+	for( int i( 0 ); i < 10000; ++i ) {
 		kMapBase.insert( MapBase::value_type( i, new Base ) );
 	}
 
-	AssociativeDeleter<MapBase> kAssociativeDeleter;
-	kAssociativeDeleter( kMapBase );
-
+	const __int64 d3( ::GetTickCount() );
+	
+	//AssociativeDeleter<MapBase>()( kMapBase );
 	std::for_each( kMapBase.begin(), kMapBase.end(), []( MapBase::value_type p ) { delete p.second; p.second = nullptr; } );
+
+	const __int64 d4( ::GetTickCount() );
 
 	return 0;
 }
