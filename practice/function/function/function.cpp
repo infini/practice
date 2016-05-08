@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <boost/unordered_map.hpp>
+#include "random.h"
 
 class Base
 {
@@ -20,6 +21,9 @@ private:
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	RandomNumberGenerator kRandomNumberGenerator;
+	kRandomNumberGenerator.install();
+
 	std::vector<Base*>	kBase;
 	for( int i( 0 ); i < 10; ++i ) {
 		kBase.push_back( new Base );

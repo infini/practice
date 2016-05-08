@@ -27,12 +27,18 @@
     <ClInclude Include="function.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="random.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="function.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="random.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
