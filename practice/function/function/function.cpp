@@ -13,7 +13,6 @@ class Base
 public:
 	const int*	get() const	{	return n;	}
 	int*	get() { return const_cast<int*>( static_cast<const Base&>( *this ).get() );	}
-	//int*	get()	{ return this->get();	}
 
 private:
 	int* n;
@@ -29,14 +28,22 @@ int _tmain(int argc, _TCHAR* argv[])
 	Base kBasee;
 	int* p = kBasee.get();
 
-	//SequenceDeleter< std::vector<Base*> >( kBase );
-	std::for_each( kBase.begin(), kBase.end(), []( std::vector<Base*>::value_type p ) {		delete p;	p = 0;	} );
+	std::for_each( kBase.begin(), kBase.end(), []( std::vector<Base*>::value_type p ) {		delete p;	p = nullptr;	} );
+	SequenceDeleter<std::vector<Base*> > kSequenceDeleter;
+	kSequenceDeleter( kBase );
+	
 
 	typedef boost::unordered_map<int, Base*>	MapBase;
 	MapBase kMapBase;
 
-	std::for_each( kMapBase.begin(), kMapBase.end(), []( MapBase::value_type p ) { delete p.second; } );
+	for( int i( 0 ); i < 10; ++i ) {
+		kMapBase.insert( MapBase::value_type( i, new Base ) );
+	}
 
+	AssociativeDeleter<MapBase> kAssociativeDeleter;
+	kAssociativeDeleter( kMapBase );
+
+	std::for_each( kMapBase.begin(), kMapBase.end(), []( MapBase::value_type p ) { delete p.second; p.second = nullptr; } );
 
 	return 0;
 }
