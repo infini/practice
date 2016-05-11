@@ -19,8 +19,16 @@ private:
 	int* n;
 };
 
+void	Deleter( Base*& p )
+{
+	delete p;
+	p = 0;
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
+	Base* pkBase( new Base );
+	Deleter( pkBase );
 	RandomNumberGenerator kRandomNumberGenerator;
 	//kRandomNumberGenerator.install();
 

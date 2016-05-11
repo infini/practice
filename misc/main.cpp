@@ -300,20 +300,45 @@ void modify( const int & ref )
 
 #include <boost/any.hpp>
 #include <Windows.h>
-
 #include <boost/functional/hash/hash.hpp>
+#include <vector>
+#include <boost/unordered_set.hpp>
+#include <boost/unordered_map.hpp>
 
 int	_tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
 {
-	const size_t sizePage = ::GetLargePageMinimum() / ( 1024 /** 1024*/ );
+	const __int64 d0( ::GetTickCount() * 1000 );
+	std::vector<int>	kSequenceVector;
+	kSequenceVector.resize( 100000, 10 );
+	boost::unordered_set<int>	kAssociateSet;
+	for( int i( 0 ); i < 30000; ++i ) {
+		kAssociateSet.insert( i );
+	}
+	
+	const __int64 d1( ::GetTickCount() * 1000 );
+	std::for_each( kSequenceVector.cbegin(), kSequenceVector.cend(), []( const std::vector<int>::value_type& t ) {
+		if( 0 < t ) {
+			int tmp( 0 );
+			++tmp;
+		}
+	} );
+	const __int64 d2( ::GetTickCount() * 1000 );
+	std::for_each( kAssociateSet.cbegin(), kAssociateSet.cend(), []( const boost::unordered_set<int>::value_type& t ) {
+		if( 0 < t ) {
+			int tmp( 0 );
+			++tmp;
+		}
+	} );
+	const __int64 d3( ::GetTickCount() * 1000 );
+	
+	int iBreak( 0 );
+	++iBreak;
 
-	std::cout << "GetLargePageMinimum : " << sizePage << "kb" << std::endl;
 
-
-	boost::hash<std::string> string_hash;
-
-	std::size_t size = string_hash("aaaaaa");
-
+// 	const size_t sizePage = ::GetLargePageMinimum() / ( 1024 /** 1024*/ );
+// 	std::cout << "GetLargePageMinimum : " << sizePage << "kb" << std::endl;
+// 	boost::hash<std::string> string_hash;
+// 	std::size_t size = string_hash("aaaaaa");
 
 // 	boost::any var_any = 0;
 // 	var_any = 3.14;
