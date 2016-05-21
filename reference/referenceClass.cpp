@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "referenceClass.h"
 #include <algorithm>
+#include <vector>
 #include <boost/unordered_map.hpp>
 
 ReferenceClass::ReferenceClass()
@@ -37,6 +38,29 @@ ReferenceClass&		ReferenceClass::operator =( const ReferenceClass& rhs )
 
 void	ReferenceClass::testReference()
 {
+	typedef std::vector<int>	IntegerContainer;
+	IntegerContainer kIntegerContainer;
+
+	for( int i( 0 ); i < 10; ++i ) {
+		kIntegerContainer.push_back( i );
+	}
+
+	auto it( std::find_if( kIntegerContainer.begin(), kIntegerContainer.end(), []( IntegerContainer::value_type t ){
+		return t == 1;
+	} ) );
+	if( it == kIntegerContainer.end() ) {
+		return;
+	}
+
+	IntegerContainer kTempIntegerContainer( kIntegerContainer.begin(), it );
+	++it;
+	std::for_each( it, kIntegerContainer.end(), [&kTempIntegerContainer]( IntegerContainer::value_type t ){
+		kTempIntegerContainer.push_back( t );
+	} );
+
+
+
+
 	for( int i( 0 ); i < 100; ++i ) {
 		m_kIntegerPairReferenceClass.insert( IntegerPairReferenceClass::value_type( i, new ReferenceClass ) );
 	}
