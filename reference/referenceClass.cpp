@@ -41,7 +41,10 @@ void	ReferenceClass::testReference()
 		m_kIntegerPairReferenceClass.insert( IntegerPairReferenceClass::value_type( i, new ReferenceClass ) );
 	}
 
-	std::for_each( m_kIntegerPairReferenceClass.cbegin(), m_kIntegerPairReferenceClass.cend(), []( const IntegerPairReferenceClass::value_type& t ){
+	int iSlot( 0 );
+	std::for_each( m_kIntegerPairReferenceClass.cbegin(), m_kIntegerPairReferenceClass.cend(), [&iSlot, this]( const IntegerPairReferenceClass::value_type& t ){
+		this->m_iInteger = 1;
+		iSlot = this->getInteger();
 		ReferenceClass kReferenceClass;
 		kReferenceClass = *(t.second);
 

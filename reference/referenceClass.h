@@ -14,6 +14,8 @@ public:
 
 	void	testReference();
 
+	int		getInteger() const	{	return m_iInteger;	}
+
 private:
 	int		m_iInteger;
 	std::string		m_kString;
