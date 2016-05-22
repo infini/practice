@@ -9,10 +9,12 @@ class ReferenceClass
 public:
 	ReferenceClass();
 	ReferenceClass( const ReferenceClass& rhs );
+	~ReferenceClass();
 
 	ReferenceClass&	operator =( const ReferenceClass& rhs );
 
 	void	testReference();
+	void	set()	{	m_iInteger = 1;	}
 
 	int		getInteger() const	{	return m_iInteger;	}
 

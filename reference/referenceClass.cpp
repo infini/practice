@@ -27,6 +27,14 @@ ReferenceClass::ReferenceClass( const ReferenceClass& rhs )
 	++i;
 }
 
+ReferenceClass::~ReferenceClass()
+{
+	m_iInteger = 0;
+	m_kString = "";
+	m_fReal = 0;
+	m_kIntegerPairReferenceClass.clear();
+}
+
 ReferenceClass&		ReferenceClass::operator =( const ReferenceClass& rhs )
 {
 	m_iInteger = rhs.m_iInteger;
