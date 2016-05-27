@@ -274,13 +274,19 @@ void f(int x)
 	}
 }
 
-class Ref
+class Ref : public std::vector<int>
 {
 public:
 	int m_ref;
 
 	Ref() : m_ref( 1 ) {}
 	~Ref() {  }
+
+private:
+	void	function( const int iID )
+	{
+		push_back( iID );
+	}
 };
 
 void modify( const int & ref )
@@ -307,6 +313,8 @@ void modify( const int & ref )
 
 int	_tmain( int /*argc*/, _TCHAR* /*argv[]*/ )
 {
+	Ref kRef;
+	kRef.push_back( 1 );
 	const __int64 d0( ::GetTickCount() * 1000 );
 	std::vector<int>	kSequenceVector;
 	kSequenceVector.resize( 100000, 10 );
