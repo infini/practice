@@ -27,6 +27,12 @@
     <ClInclude Include="ptr_container.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="unordered_container.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="multi_index.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -36,6 +42,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ptr_container.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="unordered_container.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="multi_index.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
